@@ -2,7 +2,11 @@ module github.com/tad17/tad
 
 go 1.19
 
-require github.com/gofiber/fiber/v2 v2.48.0
+require (
+	github.com/go-sql-driver/mysql v1.7.1
+	github.com/gofiber/fiber/v2 v2.48.0
+	github.com/jmoiron/sqlx v1.3.5
+)
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
