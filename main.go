@@ -20,10 +20,19 @@ func testRouter(db *sqlx.DB, query string) string {
 	return s
 }
 
+func testHTML(db *sqlx.DB, query string) map[string]interface{} {
+	result := make(map[string]interface{})
+	result["Item"] = "Проверка"
+	result["value"] = 456
+	result["items"] = []string{"Первый", "Второй", "Третий"}
+	return result
+}
+
 func main() {
 	db := fiber.OpenDB("sea")
 	app := fiber.NewApp("test-app", db)
 	app.JSONRouter("/test", testRouter)
+	app.HTMLRouter("test2", testHTML)
 	app.Start(4444)
 	fmt.Printf("init app fiber: %v\n", app)
 }
