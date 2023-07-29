@@ -21,14 +21,18 @@ type App struct {
 	db    *sqlx.DB
 }
 
+
 type StringHandler func(db *sqlx.DB, query string) string
 type HTMLHandler func(db *sqlx.DB, query string) map[string]interface{}
 
 func OpenDB(database string) *sqlx.DB {
 	// fmt.Printf("открываю БД nano-svelte\n")
-	db, err := sqlx.Open("mysql", "itman:X753951x@(xigmanas:3306)/"+database)
+	username := os.Getenv("USERNAMEDB")
+	password := os.Getenv("PASSWORDDB")
+	connstr := fmt.Sprintf("%s:%s@(xigmanas:3306)/%s", username, password, database)
+	db, err := sqlx.Open("mysql", connstr)
 	if err != nil {
-		fmt.Errorf("невозможно открыть базу данных %s", database)
+		fmt.Errorf("невозможно открыть базу данных %s, %v\n", database, err)
 		os.Exit(0)
 	}
 	return db
