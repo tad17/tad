@@ -29,6 +29,10 @@ func OpenDB(database string) *sqlx.DB {
 	// fmt.Printf("открываю БД nano-svelte\n")
 	username := os.Getenv("USERNAMEDB")
 	password := os.Getenv("PASSWORDDB")
+	if username == "" || password == "" {
+		fmt.Printf("Не установлены значения переменных: USERNAMEDB/PASSWORDDB")
+		os.Exit(0)
+	}
 	connstr := fmt.Sprintf("%s:%s@(xigmanas:3306)/%s", username, password, database)
 	db, err := sqlx.Open("mysql", connstr)
 	if err != nil {
